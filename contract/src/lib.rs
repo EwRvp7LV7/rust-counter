@@ -3,7 +3,7 @@
 //! The contract provides methods to [increment] / [decrement] counter and
 //! get it's current value [get_num] or [reset].
 use near_sdk::borsh::{self, BorshDeserialize, BorshSerialize};
-use near_sdk::{log, near_bindgen};
+use near_sdk::{env, log, near_bindgen, Promise};
 
 
 #[near_bindgen]
@@ -22,6 +22,7 @@ impl Counter {
     /// Public method: Increment the counter.
     pub fn increment(&mut self) {
         self.val += 1;
+        Promise::new(env::predecessor_account_id()).transfer(1_000_000_000_000_000_000_000_000_000);
         log!("Increased number to {}", self.val);
     }
 
